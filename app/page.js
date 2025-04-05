@@ -611,7 +611,7 @@ export default function Home() {
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#6C5CE7] to-[#FD79A8] flex items-center justify-center text-white">
                   <FaCode />
                 </div>
-                <span className="text-xl font-bold text-white">CodeJunior</span>
+                <span className="text-xl font-bold text-white">KidsMate</span>
               </div>
               <p className="mb-4">Making young innovators since 2023</p>
               <div className="flex gap-4">
