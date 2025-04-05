@@ -284,8 +284,9 @@ export default function Home() {
 
       {/* ===== NAVIGATION ===== */}
       <nav
-        className={`sticky top-0 z-50 transition-all duration-300 
-  ${scrolled ? "bg-white/80 backdrop-blur-md shadow-md" : "bg-transparent"}`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          scrolled ? "bg-white/80 backdrop-blur-md shadow-md" : "bg-transparent"
+        }`}
       >
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <motion.div
@@ -357,27 +358,33 @@ export default function Home() {
               play-based learning!
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
+              
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={triggerConfetti}
+                  className="bg-gradient-to-r from-[#6C5CE7] to-[#FD79A8] hover:from-[#5649C7] hover:to-[#E84393] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl flex items-center justify-center gap-2"
+                >
+                  {/* <FaRegSmile className="text-xl" /> */}
+                  <span>
+                    <Image
+                      src="/emoji.png"
+                      alt="emoji"
+                      width={48}
+                      height={48}
+                      className="w-12"
+                    />
+                  </span>
+                  Book Free Trial
+                </motion.button>
+              
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={triggerConfetti}
-                className="bg-gradient-to-r from-[#6C5CE7] to-[#FD79A8] hover:from-[#5649C7] hover:to-[#E84393] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl flex items-center justify-center gap-2"
-              >
-                {/* <FaRegSmile className="text-xl" /> */}
-                <span>
-                  <Image
-                    src="/emoji.png"
-                    alt="emoji"
-                    width={48}
-                    height={48}
-                    className="w-12"
-                  />
-                </span>
-                Book Free Trial
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  const section = document.getElementById('courses');
+                  section?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className="border-2 border-[#6C5CE7] text-[#6C5CE7] hover:bg-[#6C5CE7] hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors"
               >
                 Explore Courses
@@ -452,7 +459,7 @@ export default function Home() {
       </section>
 
       {/* ===== COURSES SECTION ===== */}
-      <section className="py-16 px-4 bg-[#F8F9FA]">
+      <section id="courses" className="py-16 px-4 bg-[#F8F9FA]">
         <div className="container mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
