@@ -554,7 +554,7 @@ export default function Home() {
                     <p className="text-sm text-gray-500">{testimonial.role}</p>
                   </div>
                 </div>
-                <p className="text-gray-600 mb-4 italic">"{testimonial.quote}"</p>
+                <p className="text-gray-600 mb-4 italic">&quot;{testimonial.quote}&quot;</p>
                 <div className="flex text-yellow-400">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <span key={i}>★</span>
@@ -575,7 +575,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Spark Your Child's Creativity?
+              Ready to Spark Your Child&apos;s Creativity?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
               Join thousands of kids who discovered the joy of creating with code
