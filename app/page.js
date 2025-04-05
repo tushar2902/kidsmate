@@ -5,6 +5,7 @@ import { FaChild, FaRobot, FaGamepad, FaCode, FaStar, FaLaptopCode, FaRegSmile, 
 import { PiStudentBold, PiCertificateBold } from 'react-icons/pi';
 import { IoMdSchool } from 'react-icons/io';
 import { BsRobot, BsFillPatchCheckFill } from 'react-icons/bs';
+import Image from 'next/image'
 
 // Animated floating shapes component
 const FloatingShapes = () => {
@@ -306,7 +307,8 @@ export default function Home() {
                 className="bg-gradient-to-r from-[#6C5CE7] to-[#FD79A8] hover:from-[#5649C7] hover:to-[#E84393] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl flex items-center justify-center gap-2"
               >
                 {/* <FaRegSmile className="text-xl" /> */}
-                <img src='/emoji.png' className='w-12'/>
+                
+                <Image src="/emoji.png" alt="emoji" width={48} height={48} className="w-12" />
                 Book Free Trial
               </motion.button>
               <motion.button
