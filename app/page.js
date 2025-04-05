@@ -308,7 +308,7 @@ export default function Home() {
               >
                 {/* <FaRegSmile className="text-xl" /> */}
                 
-                <Image src="/emoji.png" alt="emoji" width={48} height={48} className="w-12" />
+                <span><Image src="/emoji.png" alt="emoji" width={48} height={48} className="w-12" /></span>
                 Book Free Trial
               </motion.button>
               <motion.button
@@ -332,11 +332,6 @@ export default function Home() {
             <div className="w-96 h-96 bg-[#6C5CE7] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
             <div className="w-96 h-96 bg-[#FD79A8] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
           </div>
-          {/* <img
-            src="/kid.jpg" // Replace with your image
-            alt="Happy kids coding"
-            className="relative z-10 mx-auto w-96"
-          /> */}
         </motion.div>
       </header>
 
