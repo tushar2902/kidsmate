@@ -246,7 +246,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F8F9FA] to-[#E3F2FD] overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-[#F8F9FA] to-[#E3F2FD]">
       {showConfetti && <Confetti />}
       
       {/* ===== NAVIGATION ===== */}
