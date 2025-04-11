@@ -7,7 +7,7 @@ import * as Yup from "yup";
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://kidsmate-backend.onrender.com",
   timeout: 10000, // 10 seconds timeout
   headers: {
     "Content-Type": "multipart/form-data",
