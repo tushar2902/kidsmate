@@ -95,7 +95,7 @@ const RegistrationForm = ({ onSuccess }) => {
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
       <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
-        Kids Coding Course Registration
+        Kidsmate Course Registration
       </h2>
 
       {serverError && (
