@@ -23,7 +23,7 @@ const RegistrationSuccess = ({ onBack }) => {
         Registration Successful!
       </h2>
       <p className="text-gray-600 mb-6">
-        Thank you for registering. We've sent a confirmation email to you. Our
+        Thank you for registering. We&apos;ve sent a confirmation email to you. Our
         team will verify your payment and contact you shortly.
       </p>
       <button
