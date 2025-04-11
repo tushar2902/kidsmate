@@ -1,163 +1,323 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import axios from 'axios'
+import { useState } from "react";
+import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-export default function RegisterForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    ageGroup: '',
-    courseId: '',
-    upiTransactionId: ''
-  })
+// Create axios instance with base configuration
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1",
+  timeout: 10000, // 10 seconds timeout
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
 
-  const [receiptFile, setReceiptFile] = useState(null)
-  const [message, setMessage] = useState('')
-  const [loading, setLoading] = useState(false)
+const RegistrationForm = ({ onSuccess }) => {
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const validationSchema = Yup.object({
+    fullName: Yup.string()
+      .required("Full name is required")
+      .min(3, "Must be at least 3 characters"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    phone: Yup.string()
+      .required("Phone number is required")
+      .matches(/^[0-9]{10}$/, "Phone must be 10 digits"),
+    ageGroup: Yup.string().required("Age group is required"),
+    courseName: Yup.string().required("Course is required"),
+    paymentScreenshot: Yup.mixed()
+      .required("Payment receipt is required")
+      .test(
+        "fileSize",
+        "File too large (max 5MB)",
+        (value) => !value || (value && value.size <= 5 * 1024 * 1024)
+      )
+      .test(
+        "fileType",
+        "Only JPEG, PNG, or WEBP images",
+        (value) =>
+          !value ||
+          (value &&
+            ["image/jpeg", "image/png", "image/webp"].includes(value.type))
+      ),
+  });
 
-  const handleFileChange = (e) => {
-    setReceiptFile(e.target.files[0])
-  }
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      ageGroup: "",
+      courseName: "",
+      paymentScreenshot: null,
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      setLoading(true);
+      setServerError("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setMessage('')
+      const formData = new FormData();
+      Object.entries(values).forEach(([key, value]) => {
+        if (value !== null) formData.append(key, value);
+      });
 
-    const data = new FormData()
-    for (let key in formData) {
-      data.append(key, formData[key])
-    }
-    if (receiptFile) {
-      data.append('receipt', receiptFile)
-    }
+      try {
+        const response = await api.post("/register", formData);
 
-    try {
-      const res = await axios.post('http://localhost:5000/api/students/register', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+        if (response.data.success) {
+          onSuccess(response.data);
+        } else {
+          setServerError(response.data.message || "Registration failed");
         }
-      })
-
-      setMessage('✅ Registration successful!')
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        ageGroup: '',
-        courseId: '',
-        upiTransactionId: ''
-      })
-      setReceiptFile(null)
-    } catch (err) {
-      setMessage('❌ Registration failed. Please try again.')
-      console.error(err)
-    }
-
-    setLoading(false)
-  }
+      } catch (error) {
+        // Handle different types of errors
+        if (error.response) {
+          // Server responded with error status
+          setServerError(error.response.data?.message || "Registration failed");
+        } else if (error.request) {
+          // Request was made but no response received
+          setServerError("Network error. Please check your connection.");
+        } else {
+          // Other errors
+          setServerError("An unexpected error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    },
+  });
 
   return (
-    <div className="max-w-md mx-auto p-6 mt-10 bg-white rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">KidsMate Registration</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Child's Full Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border border-gray-300 rounded-xl"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Parent's Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border border-gray-300 rounded-xl"
-        />
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border border-gray-300 rounded-xl"
-        />
-        <select
-          name="ageGroup"
-          value={formData.ageGroup}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border border-gray-300 rounded-xl"
-        >
-          <option value="">Select Age Group</option>
-          <option value="4-6">4 - 6 years</option>
-          <option value="7-9">7 - 9 years</option>
-          <option value="10-12">10 - 12 years</option>
-          <option value="13+">13+ years</option>
-        </select>
-        <input
-          type="text"
-          name="course"
-          placeholder="Course"
-          value={formData.courseId}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border border-gray-300 rounded-xl"
-        />
-        <input
-          type="text"
-          name="upiTransactionId"
-          placeholder="UPI Transaction ID"
-          value={formData.upiTransactionId}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border border-gray-300 rounded-xl"
-        />
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
+      <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
+        Kids Coding Course Registration
+      </h2>
 
-        {/* UPI QR Code */}
-        <div className="text-center">
-          <p className="text-sm text-gray-600 mb-2">Scan this QR code to make payment:</p>
-          <img
-            src="/qr-code.png" // Replace with your actual QR image path
-            alt="UPI QR Code"
-            className="w-48 h-48 mx-auto rounded-lg border"
+      {serverError && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+          {serverError}
+        </div>
+      )}
+
+      <form onSubmit={formik.handleSubmit} className="space-y-4">
+        <div>
+          <label
+            htmlFor="fullName"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Full Name
+          </label>
+          <input
+            id="fullName"
+            name="fullName"
+            type="text"
+            className={`w-full px-3 py-2 border rounded-md ${
+              formik.touched.fullName && formik.errors.fullName
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.fullName}
           />
+          {formik.touched.fullName && formik.errors.fullName && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.fullName}
+            </div>
+          )}
         </div>
 
-        {/* Receipt Upload */}
         <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Upload Payment Receipt</label>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Email
+          </label>
           <input
-            type="file"
-            accept="image/*,application/pdf"
-            onChange={handleFileChange}
-            required
-            className="w-full p-2 border border-gray-300 rounded-xl"
+            id="email"
+            name="email"
+            type="email"
+            className={`w-full px-3 py-2 border rounded-md ${
+              formik.touched.email && formik.errors.email
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
           />
+          {formik.touched.email && formik.errors.email && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.email}
+            </div>
+          )}
+        </div>
+
+        <div>
+          <label
+            htmlFor="phone"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Phone Number
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            className={`w-full px-3 py-2 border rounded-md ${
+              formik.touched.phone && formik.errors.phone
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.phone}
+          />
+          {formik.touched.phone && formik.errors.phone && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.phone}
+            </div>
+          )}
+        </div>
+
+        <div>
+          <label
+            htmlFor="ageGroup"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Age Group
+          </label>
+          <select
+            id="ageGroup"
+            name="ageGroup"
+            className={`w-full px-3 py-2 border rounded-md ${
+              formik.touched.ageGroup && formik.errors.ageGroup
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.ageGroup}
+          >
+            <option value="">Select Age Group</option>
+            <option value="6-8">6-8 Years</option>
+            <option value="9-12">9-12 Years</option>
+            <option value="13-16">13-16 Years</option>
+          </select>
+          {formik.touched.ageGroup && formik.errors.ageGroup && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.ageGroup}
+            </div>
+          )}
+        </div>
+
+        <div>
+          <label
+            htmlFor="courseName"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Course
+          </label>
+          <select
+            id="courseName"
+            name="courseName"
+            className={`w-full px-3 py-2 border rounded-md ${
+              formik.touched.courseName && formik.errors.courseName
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.courseName}
+          >
+            <option value="">Select Course</option>
+            <option value="Scratch Programming">Scratch Programming</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Python Basics">Python Basics</option>
+          </select>
+          {formik.touched.courseName && formik.errors.courseName && (
+            <div className="text-red-500 text-xs mt-1">
+              {formik.errors.courseName}
+            </div>
+          )}
+        </div>
+
+        <div>
+          <label
+            htmlFor="paymentScreenshot"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Payment Receipt (Screenshot)
+          </label>
+          <input
+            id="paymentScreenshot"
+            name="paymentScreenshot"
+            type="file"
+            accept="image/jpeg, image/png, image/webp"
+            className="block w-full text-sm text-gray-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-md file:border-0
+              file:text-sm file:font-semibold
+              file:bg-blue-50 file:text-blue-700
+              hover:file:bg-blue-100"
+            onChange={(event) => {
+              formik.setFieldValue(
+                "paymentScreenshot",
+                event.currentTarget.files[0]
+              );
+            }}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.paymentScreenshot &&
+            formik.errors.paymentScreenshot && (
+              <div className="text-red-500 text-xs mt-1">
+                {formik.errors.paymentScreenshot}
+              </div>
+            )}
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#6C5CE7] text-white py-3 rounded-xl hover:bg-[#5b4cd8] transition"
+          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? 'Registering...' : 'Register Now'}
+          {loading ? (
+            <span className="flex items-center justify-center">
+              <svg
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Processing...
+            </span>
+          ) : (
+            "Register Now"
+          )}
         </button>
-
-        {message && <p className="text-center mt-4 text-gray-700">{message}</p>}
       </form>
     </div>
-  )
-}
+  );
+};
+
+export default RegistrationForm;
