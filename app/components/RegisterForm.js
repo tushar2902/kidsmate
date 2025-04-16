@@ -22,8 +22,8 @@ const RegistrationForm = ({ onSuccess, coursesByAge }) => {
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loadingCourses, setLoadingCourses] = useState(false);
 
-  const urlAgeGroup = searchParams.get("ageGroup");
-  const urlCourseName = searchParams.get("courseName");
+  const urlAgeGroup = searchParams?.get("ageGroup") || '';
+  const urlCourseName = searchParams?.get("courseName") || '';
 
   const validationSchema = Yup.object({
     fullName: Yup.string()
@@ -59,8 +59,8 @@ const RegistrationForm = ({ onSuccess, coursesByAge }) => {
       fullName: "",
       email: "",
       phone: "",
-      ageGroup: urlAgeGroup || "",
-      courseName: urlCourseName || "",
+      ageGroup: urlAgeGroup,
+      courseName: urlCourseName,
       paymentScreenshot: null,
     },
     validationSchema,
