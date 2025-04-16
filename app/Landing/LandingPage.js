@@ -177,6 +177,235 @@ const AnimatedCounter = ({ target, duration = 2 }) => {
   return <span>{count.toLocaleString()}+</span>;
 };
 
+ // Enhanced courses data with more details
+ export const courses = {
+  "5-7": [
+    {
+      title: "Code with Blocks",
+      icon: <FaGamepad className="text-2xl" />,
+      skills: [
+        "Drag-and-drop coding",
+        "Basic logic",
+        "Fun puzzles",
+        "Storytelling",
+        "Pattern recognition",
+      ],
+      duration: "6 weeks",
+      projects: [
+        "Build a digital story",
+        "Create simple games",
+        "Animate characters",
+        "Interactive cards",
+      ],
+      color: "bg-[#FF9E5E]",
+      level: "Beginner",
+      outcomes: [
+        "Computational thinking",
+        "Problem-solving basics",
+        "Digital creativity",
+      ],
+    },
+    {
+      title: "Robot Buddies",
+      icon: <BsRobot className="text-2xl" />,
+      skills: [
+        "Simple robotics",
+        "Team projects",
+        "Creative thinking",
+        "Basic electronics",
+        "Sequencing",
+      ],
+      duration: "8 weeks",
+      projects: [
+        "Program a robot dance",
+        "Build a maze solver",
+        "Create a robotic pet",
+        "Design a delivery bot",
+      ],
+      color: "bg-[#6C5CE7]",
+      level: "Beginner",
+      outcomes: [
+        "Hands-on engineering",
+        "Collaboration skills",
+        "Logical sequencing",
+      ],
+    },
+    {
+      title: "Robot Buddies 2",
+      icon: <BsRobot className="text-2xl" />,
+      skills: [
+        "Simple robotics",
+        "Team projects",
+        "Creative thinking",
+        "Basic electronics",
+        "Sequencing",
+      ],
+      duration: "8 weeks",
+      projects: [
+        "Program a robot dance",
+        "Build a maze solver",
+        "Create a robotic pet",
+        "Design a delivery bot",
+      ],
+      color: "bg-[#6C5CE7]",
+      level: "Beginner",
+      outcomes: [
+        "Hands-on engineering",
+        "Collaboration skills",
+        "Logical sequencing",
+      ],
+    },
+  ],
+  "8-10": [
+    {
+      title: "Scratch Adventures",
+      icon: <FaLaptopCode className="text-2xl" />,
+      skills: [
+        "Game development",
+        "Animation basics",
+        "Interactive stories",
+        "Event handling",
+        "Variables",
+      ],
+      duration: "10 weeks",
+      projects: [
+        "Create your first game",
+        "Animate a cartoon",
+        "Build a quiz app",
+        "Design an interactive story",
+      ],
+      color: "bg-[#00B894]",
+      level: "Intermediate",
+      outcomes: [
+        "Creative expression",
+        "Algorithmic thinking",
+        "Project planning",
+      ],
+    },
+    {
+      title: "Web Wizards",
+      icon: <FaCode className="text-2xl" />,
+      skills: [
+        "HTML/CSS basics",
+        "Creative design",
+        "Simple JavaScript",
+        "Responsive layouts",
+        "Debugging",
+      ],
+      duration: "12 weeks",
+      projects: [
+        "Build a personal website",
+        "Design a digital poster",
+        "Create a meme generator",
+        "Code a birthday card",
+      ],
+      color: "bg-[#FD79A8]",
+      level: "Intermediate",
+      outcomes: ["Web fundamentals", "Design principles", "Creative coding"],
+    },
+  ],
+  "11-13": [
+    {
+      title: "Python Playground",
+      icon: <FaCode className="text-2xl" />,
+      skills: [
+        "Python fundamentals",
+        "Problem solving",
+        "Game development",
+        "Functions",
+        "Loops & conditionals",
+      ],
+      duration: "12 weeks",
+      projects: [
+        "Create a calculator",
+        "Build a text adventure game",
+        "Develop a weather app",
+        "Code a password generator",
+      ],
+      color: "bg-[#6C5CE7]",
+      level: "Advanced",
+      outcomes: [
+        "Text-based coding",
+        "Logical reasoning",
+        "Algorithm design",
+      ],
+    },
+    {
+      title: "App Inventors",
+      icon: <IoMdSchool className="text-2xl" />,
+      skills: [
+        "Mobile app basics",
+        "UI design",
+        "Logical thinking",
+        "APIs",
+        "User experience",
+      ],
+      duration: "14 weeks",
+      projects: [
+        "Design a weather app",
+        "Create a quiz application",
+        "Build a fitness tracker",
+        "Develop a study planner",
+      ],
+      color: "bg-[#00B894]",
+      level: "Advanced",
+      outcomes: [
+        "Mobile development",
+        "User-centered design",
+        "Real-world problem solving",
+      ],
+    },
+  ],
+  "14-16": [
+    {
+      title: "AI Explorers",
+      icon: <BsRobot className="text-2xl" />,
+      skills: [
+        "Machine learning basics",
+        "Data analysis",
+        "Ethical AI",
+        "Neural networks",
+        "Model training",
+      ],
+      duration: "16 weeks",
+      projects: [
+        "Train a simple AI model",
+        "Analyze real-world data",
+        "Create a recommendation system",
+        "Build a chatbot",
+      ],
+      color: "bg-[#FF9E5E]",
+      level: "Expert",
+      outcomes: ["AI fundamentals", "Data literacy", "Future tech skills"],
+    },
+    {
+      title: "Web Warriors",
+      icon: <FaLaptopCode className="text-2xl" />,
+      skills: [
+        "Full-stack basics",
+        "APIs",
+        "Project management",
+        "Databases",
+        "Authentication",
+      ],
+      duration: "14 weeks",
+      projects: [
+        "Build a blog with CMS",
+        "Create a weather dashboard",
+        "Develop a task manager",
+        "Code a social media clone",
+      ],
+      color: "bg-[#FD79A8]",
+      level: "Expert",
+      outcomes: [
+        "Professional development",
+        "Team collaboration",
+        "Portfolio projects",
+      ],
+    },
+  ],
+};
+
 export default function Home() {
   const [activeAge, setActiveAge] = useState("5-7");
   const [showConfetti, setShowConfetti] = useState(false);
@@ -214,213 +443,9 @@ export default function Home() {
       icon: <FaStar className="text-2xl" />,
       color: "bg-[#FD79A8]",
       label: "Future Innovators",
-      description: "Specialized tech pathways",
+      description: "Specialized tech pathways to build career",
     },
   ];
-
-  // Enhanced courses data with more details
-  const courses = {
-    "5-7": [
-      {
-        title: "Code with Blocks",
-        icon: <FaGamepad className="text-2xl" />,
-        skills: [
-          "Drag-and-drop coding",
-          "Basic logic",
-          "Fun puzzles",
-          "Storytelling",
-          "Pattern recognition",
-        ],
-        duration: "6 weeks",
-        projects: [
-          "Build a digital story",
-          "Create simple games",
-          "Animate characters",
-          "Interactive cards",
-        ],
-        color: "bg-[#FF9E5E]",
-        level: "Beginner",
-        outcomes: [
-          "Computational thinking",
-          "Problem-solving basics",
-          "Digital creativity",
-        ],
-      },
-      {
-        title: "Robot Buddies",
-        icon: <BsRobot className="text-2xl" />,
-        skills: [
-          "Simple robotics",
-          "Team projects",
-          "Creative thinking",
-          "Basic electronics",
-          "Sequencing",
-        ],
-        duration: "8 weeks",
-        projects: [
-          "Program a robot dance",
-          "Build a maze solver",
-          "Create a robotic pet",
-          "Design a delivery bot",
-        ],
-        color: "bg-[#6C5CE7]",
-        level: "Beginner",
-        outcomes: [
-          "Hands-on engineering",
-          "Collaboration skills",
-          "Logical sequencing",
-        ],
-      },
-    ],
-    "8-10": [
-      {
-        title: "Scratch Adventures",
-        icon: <FaLaptopCode className="text-2xl" />,
-        skills: [
-          "Game development",
-          "Animation basics",
-          "Interactive stories",
-          "Event handling",
-          "Variables",
-        ],
-        duration: "10 weeks",
-        projects: [
-          "Create your first game",
-          "Animate a cartoon",
-          "Build a quiz app",
-          "Design an interactive story",
-        ],
-        color: "bg-[#00B894]",
-        level: "Intermediate",
-        outcomes: [
-          "Creative expression",
-          "Algorithmic thinking",
-          "Project planning",
-        ],
-      },
-      {
-        title: "Web Wizards",
-        icon: <FaCode className="text-2xl" />,
-        skills: [
-          "HTML/CSS basics",
-          "Creative design",
-          "Simple JavaScript",
-          "Responsive layouts",
-          "Debugging",
-        ],
-        duration: "12 weeks",
-        projects: [
-          "Build a personal website",
-          "Design a digital poster",
-          "Create a meme generator",
-          "Code a birthday card",
-        ],
-        color: "bg-[#FD79A8]",
-        level: "Intermediate",
-        outcomes: ["Web fundamentals", "Design principles", "Creative coding"],
-      },
-    ],
-    "11-13": [
-      {
-        title: "Python Playground",
-        icon: <FaCode className="text-2xl" />,
-        skills: [
-          "Python fundamentals",
-          "Problem solving",
-          "Game development",
-          "Functions",
-          "Loops & conditionals",
-        ],
-        duration: "12 weeks",
-        projects: [
-          "Create a calculator",
-          "Build a text adventure game",
-          "Develop a weather app",
-          "Code a password generator",
-        ],
-        color: "bg-[#6C5CE7]",
-        level: "Advanced",
-        outcomes: [
-          "Text-based coding",
-          "Logical reasoning",
-          "Algorithm design",
-        ],
-      },
-      {
-        title: "App Inventors",
-        icon: <IoMdSchool className="text-2xl" />,
-        skills: [
-          "Mobile app basics",
-          "UI design",
-          "Logical thinking",
-          "APIs",
-          "User experience",
-        ],
-        duration: "14 weeks",
-        projects: [
-          "Design a weather app",
-          "Create a quiz application",
-          "Build a fitness tracker",
-          "Develop a study planner",
-        ],
-        color: "bg-[#00B894]",
-        level: "Advanced",
-        outcomes: [
-          "Mobile development",
-          "User-centered design",
-          "Real-world problem solving",
-        ],
-      },
-    ],
-    "14-16": [
-      {
-        title: "AI Explorers",
-        icon: <BsRobot className="text-2xl" />,
-        skills: [
-          "Machine learning basics",
-          "Data analysis",
-          "Ethical AI",
-          "Neural networks",
-          "Model training",
-        ],
-        duration: "16 weeks",
-        projects: [
-          "Train a simple AI model",
-          "Analyze real-world data",
-          "Create a recommendation system",
-          "Build a chatbot",
-        ],
-        color: "bg-[#FF9E5E]",
-        level: "Expert",
-        outcomes: ["AI fundamentals", "Data literacy", "Future tech skills"],
-      },
-      {
-        title: "Web Warriors",
-        icon: <FaLaptopCode className="text-2xl" />,
-        skills: [
-          "Full-stack basics",
-          "APIs",
-          "Project management",
-          "Databases",
-          "Authentication",
-        ],
-        duration: "14 weeks",
-        projects: [
-          "Build a blog with CMS",
-          "Create a weather dashboard",
-          "Develop a task manager",
-          "Code a social media clone",
-        ],
-        color: "bg-[#FD79A8]",
-        level: "Expert",
-        outcomes: [
-          "Professional development",
-          "Team collaboration",
-          "Portfolio projects",
-        ],
-      },
-    ],
-  };
 
   // Enhanced features with more details
   const features = [
@@ -718,12 +743,6 @@ export default function Home() {
               Success Stories
             </a>
             <a
-              href="#pricing"
-              className="font-medium hover:text-[#6C5CE7] transition-colors"
-            >
-              Pricing
-            </a>
-            <a
               href="#faq"
               className="font-medium hover:text-[#6C5CE7] transition-colors"
             >
@@ -731,7 +750,7 @@ export default function Home() {
             </a>
           </div>
 
-          <Link href="/Register" className="hidden md:block">
+          <Link href="/#courses-display" className="hidden md:block">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -773,13 +792,6 @@ export default function Home() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Success Stories
-                </a>
-                <a
-                  href="#pricing"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#6C5CE7] hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Pricing
                 </a>
                 <a
                   href="#faq"
@@ -841,7 +853,10 @@ export default function Home() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={triggerConfetti}
+                onClick={() => {
+                  const AgeSection = document.getElementById("age-selector");
+                  AgeSection?.scrollIntoView({ behavior: "smooth" });
+                }}
                 className="bg-gradient-to-r from-[#6C5CE7] to-[#FD79A8] hover:from-[#5649C7] hover:to-[#E84393] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl flex items-center justify-center gap-2"
               >
                 <span>
@@ -860,7 +875,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
-                  const section = document.getElementById("courses");
+                  const section = document.getElementById("age-selector");
                   section?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="border-2 border-[#6C5CE7] text-[#6C5CE7] hover:bg-[#6C5CE7] hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors"
@@ -909,7 +924,7 @@ export default function Home() {
       </section>
 
       {/* ===== AGE SELECTOR ===== */}
-      <section id="courses" className="py-12 px-4 bg-white">
+      <section id="age-selector" className="py-12 px-4 bg-white">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -1032,7 +1047,7 @@ export default function Home() {
                 Perfect Courses for {activeAge} Year Olds
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {courses[activeAge].map((course, index) => (
                   <motion.div
                     key={index}
@@ -1110,7 +1125,14 @@ export default function Home() {
                     </div>
 
                     <div className="mt-8 flex gap-4">
-                      <Link href="/Register">
+                      <Link
+                        href={{
+                          pathname: "/Register",
+                          query: { ageGroup: activeAge,
+                            courseName: course.title
+                           },
+                        }}
+                      >
                         <motion.button
                           whileHover={{ scale: 1.03 }}
                           whileTap={{ scale: 0.97 }}
@@ -1327,145 +1349,6 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== PRICING SECTION ===== */}
-      <section id="pricing" className="py-16 px-4 bg-white">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#6C5CE7] to-[#FD79A8] bg-clip-text text-transparent">
-                Simple, Transparent Pricing
-              </span>
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Quality education at accessible prices with flexible options
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              {
-                name: "Starter",
-                price: "$29",
-                period: "per week",
-                description: "Perfect for trying out coding",
-                features: [
-                  "1 session per week",
-                  "Small group class",
-                  "Access to learning platform",
-                  "Email support",
-                ],
-                color: "bg-[#6C5CE7]/10",
-                textColor: "text-[#6C5CE7]",
-                buttonColor: "bg-[#6C5CE7]",
-              },
-              {
-                name: "Standard",
-                price: "$99",
-                period: "per month",
-                description: "Best for consistent learning",
-                features: [
-                  "4 sessions per month",
-                  "Small group class",
-                  "Priority scheduling",
-                  "Progress reports",
-                  "Access to learning platform",
-                ],
-                color: "bg-[#FD79A8]/10",
-                textColor: "text-[#FD79A8]",
-                buttonColor: "bg-[#FD79A8]",
-                popular: true,
-              },
-              {
-                name: "Premium",
-                price: "$179",
-                period: "per month",
-                description: "For accelerated progress",
-                features: [
-                  "8 sessions per month",
-                  "1:1 or small group",
-                  "Priority scheduling",
-                  "Detailed progress reports",
-                  "Project portfolio review",
-                  "24/7 platform access",
-                ],
-                color: "bg-[#00B894]/10",
-                textColor: "text-[#00B894]",
-                buttonColor: "bg-[#00B894]",
-              },
-            ].map((plan, index) => (
-              <motion.div
-                key={index}
-                className={`relative rounded-2xl overflow-hidden shadow-lg ${
-                  plan.popular
-                    ? "border-2 border-[#FD79A8]"
-                    : "border border-gray-200"
-                }`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                {plan.popular && (
-                  <div className="absolute top-0 right-0 bg-[#FD79A8] text-white px-4 py-1 text-xs font-bold rounded-bl-lg">
-                    MOST POPULAR
-                  </div>
-                )}
-                <div className="p-8">
-                  <div
-                    className={`${plan.color} ${plan.textColor} p-4 rounded-xl mb-6`}
-                  >
-                    <h3 className="text-2xl font-bold">{plan.name}</h3>
-                    <div className="flex items-end mt-2">
-                      <span className="text-4xl font-bold">{plan.price}</span>
-                      <span className="ml-2 text-gray-600">{plan.period}</span>
-                    </div>
-                    <p className="mt-2 text-sm">{plan.description}</p>
-                  </div>
-
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start">
-                        <BsFillPatchCheckFill
-                          className={`mt-1 mr-2 flex-shrink-0 ${plan.textColor}`}
-                        />
-                        <span className="text-gray-600">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className={`w-full ${plan.buttonColor} text-white py-3 rounded-xl font-semibold`}
-                  >
-                    Get Started
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-4">
-              Need something more flexible? We offer custom plans!
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="border-2 border-[#6C5CE7] text-[#6C5CE7] hover:bg-[#6C5CE7] hover:text-white px-8 py-3 rounded-xl font-semibold transition-colors"
-            >
-              Talk to an Advisor
-            </motion.button>
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -14,9 +15,15 @@ const api = axios.create({
   },
 });
 
-const RegistrationForm = ({ onSuccess }) => {
+const RegistrationForm = ({ onSuccess, coursesByAge }) => {
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [loadingCourses, setLoadingCourses] = useState(false);
+
+  const urlAgeGroup = searchParams.get("ageGroup");
+  const urlCourseName = searchParams.get("courseName");
 
   const validationSchema = Yup.object({
     fullName: Yup.string()
@@ -52,8 +59,8 @@ const RegistrationForm = ({ onSuccess }) => {
       fullName: "",
       email: "",
       phone: "",
-      ageGroup: "",
-      courseName: "",
+      ageGroup: urlAgeGroup || "",
+      courseName: urlCourseName || "",
       paymentScreenshot: null,
     },
     validationSchema,
@@ -91,6 +98,22 @@ const RegistrationForm = ({ onSuccess }) => {
       }
     },
   });
+
+  useEffect(() => {
+    if (formik.values.ageGroup) {
+      setLoadingCourses(true);
+      // Simulate API call or filter local data
+      setTimeout(() => {
+        setFilteredCourses(coursesByAge[formik.values.ageGroup] || []);
+        setLoadingCourses(false);
+      }, 300);
+    } else {
+      setFilteredCourses([]);
+    }
+  }, [formik.values.ageGroup]);
+
+  // Lock the ageGroup field if it came from URL
+  const isAgeGroupLocked = !!urlAgeGroup;
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
@@ -193,23 +216,40 @@ const RegistrationForm = ({ onSuccess }) => {
           >
             Age Group
           </label>
-          <select
-            id="ageGroup"
-            name="ageGroup"
-            className={`w-full px-3 py-2 border rounded-md ${
-              formik.touched.ageGroup && formik.errors.ageGroup
-                ? "border-red-500"
-                : "border-gray-300"
-            }`}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.ageGroup}
-          >
-            <option value="">Select Age Group</option>
-            <option value="6-8">6-8 Years</option>
-            <option value="9-12">9-12 Years</option>
-            <option value="13-16">13-16 Years</option>
-          </select>
+          {isAgeGroupLocked ? (
+            <div className="p-2 border border-gray-300 rounded-md bg-gray-50">
+              {formik.values.ageGroup} years
+              <input
+                type="hidden"
+                id="ageGroup"
+                name="ageGroup"
+                value={formik.values.ageGroup}
+              />
+            </div>
+          ) : (
+            <select
+              id="ageGroup"
+              name="ageGroup"
+              className={`w-full px-3 py-2 border rounded-md ${
+                formik.touched.ageGroup && formik.errors.ageGroup
+                  ? "border-red-500"
+                  : "border-gray-300"
+              }`}
+              onChange={(e) => {
+                formik.handleChange(e);
+                // Reset courseName when age group changes
+                formik.setFieldValue("courseName", "");
+              }}
+              onBlur={formik.handleBlur}
+              value={formik.values.ageGroup}
+            >
+              <option value="">Select Age Group</option>
+              <option value="5-7">5-7 Years</option>
+              <option value="8-10">8-10 Years</option>
+              <option value="11-13">11-13 Years</option>
+              <option value="14-16">14-16 Years</option>
+            </select>
+          )}
           {formik.touched.ageGroup && formik.errors.ageGroup && (
             <div className="text-red-500 text-xs mt-1">
               {formik.errors.ageGroup}
@@ -235,11 +275,20 @@ const RegistrationForm = ({ onSuccess }) => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.courseName}
+            disabled={loadingCourses}
           >
             <option value="">Select Course</option>
-            <option value="Scratch Programming">Scratch Programming</option>
-            <option value="Web Development">Web Development</option>
-            <option value="Python Basics">Python Basics</option>
+            {loadingCourses ? (
+              <option value="" disabled>
+                Loading courses...
+              </option>
+            ) : (
+              filteredCourses.map((course) => (
+                <option key={course.title} value={course.title}>
+                  {course.title}
+                </option>
+              ))
+            )}
           </select>
           {formik.touched.courseName && formik.errors.courseName && (
             <div className="text-red-500 text-xs mt-1">
